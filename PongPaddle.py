@@ -12,3 +12,6 @@ class PongPaddle(Widget):
 			speedup = 1.1
 			offset = 0.15 * Vector(0, ball.center_y-self.center_y)
 			ball.velocity = speedup * (offset - ball.velocity)
+			return True
+		else:
+			return False
