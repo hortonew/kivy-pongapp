@@ -5,11 +5,13 @@ from random import randint
 from PongBall import PongBall
 from PongPaddle import PongPaddle
 import time
+import math
 
 class PongGame(Widget):
 	ball = ObjectProperty(None)
 	player1 = ObjectProperty(None)
 	player2 = ObjectProperty(None)
+	difficulty = ObjectProperty(None)
 
 	def serve_ball(self, vel=(10, 0)):
 		self.ball.center = self.center
@@ -63,11 +65,12 @@ class PongGame(Widget):
 			# Ball won't be outside bounds; move it
 			self.ball.move()
 			
-		# Basic AI for player 1
+		# Basic AI for player 1 - increases in speed every 5 player points
+		self.difficulty = math.floor((self.player2.score+5)/5)
 		if self.ball.y > self.player1.center_y:
-			self.player1.center_y += 3
+			self.player1.center_y += 3 + self.difficulty
 		if self.ball.y < self.player1.center_y:
-			self.player1.center_y -= 3
+			self.player1.center_y -= 3 + self.difficulty
 
 	# Handle drag
 	def on_touch_move(self, touch):
